@@ -1,0 +1,30 @@
+body {
+    font-family: 'Amatic SC', cursive;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.container {
+    max-width: 80%;
+    margin: auto;
+}
+
+img {
+    max-width: 250px;
+    margin: 0 auto;
+    border-radius: 5px; 
+    border: 2px solid black;
+    cursor: pointer;
+}
+.kitten-container {
+    display: inline-block;
+    padding: 10px;
+}
+
+.kitten-container div {
+    font-size: 2em;
+    text-align: center;
+    font-weight: bold;
+}
