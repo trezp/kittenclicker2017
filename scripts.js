@@ -19,7 +19,7 @@
         const kitty = `
         <div class="kitten-container" id="${kittyID}">
             <h2>${kitten.name}</h2>
-            <img src="${kitten.imgUrl}" alt="${kitten.alt}">
+            <img src="images/${kitten.imgUrl}" alt="${kitten.alt}">
             <div>${kitten.name} clicked ${kitten.counter} times.</div>
         </div>
         `
