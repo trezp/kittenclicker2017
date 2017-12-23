@@ -43,11 +43,30 @@
 
       $('#submit').on('click', function(event){
         event.preventDefault();
+
         const currentKitten = $('.container-cat').attr('id');
-        const catName = $('#catName').val();
-        const catClicks = parseInt($('#catClicks').val());
-        controller.updateKitten(currentKitten, catName, catClicks);
-        view.updateView(kittenList, currentKitten);
+        const catName = $('#catName').val() || currentKitten;
+        const catClicks = $('#catClicks').val();
+        const kittenObj = kittenList.filter(function(kitten){
+          return kitten.id === currentKitten;
+        });
+
+
+        if (catClicks === ''){
+          $('#catClicks').parent().find('span').remove();
+          controller.updateKitten(currentKitten, catName, kittenObj[0].counter);
+          view.updateView(kittenList, currentKitten);
+          $('#catName').val('');
+          $('#catClicks').val('');
+        } else if (catClicks.length > 0 && isNaN(parseInt(catClicks))){
+          $('#catClicks').parent().append('<span style="color:red">Please enter a number in the "clicks" field</span>');
+        } else {
+          $('#catClicks').parent().find('span').remove();
+          controller.updateKitten(currentKitten, catName, parseInt(catClicks));
+          view.updateView(kittenList, currentKitten);
+          $('#catName').val('');
+          $('#catClicks').val('');
+        }
       })
     },
     renderMain: function(kitten){
@@ -68,7 +87,9 @@
       kittenList.forEach(function(kitten){
         if (kitten.id === currentKitten){
           $('.cat-detail').empty();
+          $('.cat-list').empty();
           $('.cat-detail').append(view.renderMain(kitten));
+          $('.cat-list').append(view.renderSideBar(kittenList));
         }    
       });
     }
@@ -84,12 +105,18 @@
       model.kittens.push(new Kitten(name, imgUrl));
     },
     updateKitten: function(kittenId, name, clicks){
+      let newKitten = '';
       model.kittens.forEach(function(kitten){
         if(kittenId === kitten.id){
+          kitten.id = name.toLowerCase();
           kitten.name = name; 
           kitten.counter = clicks;
+          kitten.alt = `A kitten named ${kitten.name}.`;
+          newKitten += kitten.id;
         }
       });
+      view.updateView(this.getAllKittens(), newKitten);
+      
     },
     incrementCounter: function(kittenId){
       model.kittens.forEach(function(kitten){
