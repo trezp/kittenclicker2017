@@ -21,7 +21,7 @@
         const kittyID = kitten.name.toLowerCase();
  
         const kitty = `
-        <div class="kitten-container" id="${kittyID}">
+        <div class="container-cat" id="${kittyID}">
             <h2>${kitten.name}</h2>
             <img src="images/${kitten.imgUrl}" alt="${kitten.alt}">
             <div>${kitten.name} clicked ${kitten.counter} times.</div>
@@ -37,7 +37,7 @@
      //page setup
 
      $('.cat-list').append(catList);
-     $('.container').append(kittenTemplate);
+     $('.container-main').append(kittenTemplate);
      $('.cat-detail').append(kittenTemplate[0]);
 
     //count kittens
@@ -45,7 +45,7 @@
         kitten.counter = kitten.counter + 1;
     }
 
-    $('.container').on("click", ".kitten-container img", function(event){
+    $('.container-main').on("click", ".container-cat img", function(event){
         const currentKitten = $(this).parent().attr("id");
         
         kittens.forEach(function(kitten){
@@ -56,7 +56,7 @@
         });
     });
 
-    $('.container').on("click", ".cat-list li", function(event){
+    $('.container-main').on("click", ".cat-list li", function(event){
         const currentKitten = $(this).html().toLowerCase();
 
         kittenTemplate.forEach(function(kitten){
@@ -67,5 +67,3 @@
         });
     });
 })();
-
-//TODO: Fix bug where counter text resets to 0 when switching between kittens 
