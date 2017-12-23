@@ -22,25 +22,32 @@
       $('.cat-list').append(this.renderSideBar(kittenList));
       $('.cat-detail').append(this.renderMain(kittenList[0]));   
       
+      //kitten counter 
       $('.container-main').on("click", ".container-cat img", function(){
         const currentKitten = $(this).parent().attr('id');  
         controller.incrementCounter(currentKitten);
         view.updateView(kittenList, currentKitten);
       });
 
+      //sidebar
       $('.container-main').on("click", ".cat-list li", function(){
         const currentKitten = $(this).attr('id');
         view.updateView(kittenList, currentKitten);
       });
 
+      //toggle change cat form
       $('#adminToggle').on("click", function(){
-        $(this).html() === 'Admin Off' ? 
-          $(this).html("Admin On") : $(this).html("Admin Off");
-
-        $(this).toggleClass("admin-on");
+        $(this).toggleClass("active-button");
         $('.cat-admin').toggle();
       });
 
+      //toggle new cat form
+      $('#newCatToggle').on("click", function(){
+        $(this).toggleClass("active-button");
+        $('.cat-new').toggle();
+      });
+
+      //handle change cat form ***REALLY NEEDS REFACTOR***
       $('#submit').on('click', function(event){
         event.preventDefault();
 
@@ -50,7 +57,6 @@
         const kittenObj = kittenList.filter(function(kitten){
           return kitten.id === currentKitten;
         });
-
 
         if (catClicks === ''){
           $('#catClicks').parent().find('span').remove();
@@ -67,6 +73,16 @@
           $('#catName').val('');
           $('#catClicks').val('');
         }
+      });
+
+      $('#newSubmit').on('click', function(event){
+        event.preventDefault();
+        controller.createNewKitten($('#newName').val());
+        view.updateView(kittenList, null);
+      });
+
+      $('#delete').on('click', function(event){
+
       })
     },
     renderMain: function(kitten){
@@ -84,12 +100,12 @@
       });
     },
     updateView: function(kittenList, currentKitten){
+      $('.cat-list').empty();
+      $('.cat-list').append(view.renderSideBar(kittenList));
       kittenList.forEach(function(kitten){
         if (kitten.id === currentKitten){
           $('.cat-detail').empty();
-          $('.cat-list').empty();
-          $('.cat-detail').append(view.renderMain(kitten));
-          $('.cat-list').append(view.renderSideBar(kittenList));
+          $('.cat-detail').append(view.renderMain(kitten)); 
         }    
       });
     }
@@ -116,7 +132,9 @@
         }
       });
       view.updateView(this.getAllKittens(), newKitten);
-      
+    },
+    deleteKitten(){
+      //TODO
     },
     incrementCounter: function(kittenId){
       model.kittens.forEach(function(kitten){

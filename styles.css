@@ -69,13 +69,13 @@ button {
 }
 
  /* ADMIN */
-.cat-admin {
+.cat-admin, .cat-new {
     display: none;
 }
 .cat-admin div {
     padding-bottom: .5em;
 }
 
-.admin-on {
+.active-button {
     background: green;
 }

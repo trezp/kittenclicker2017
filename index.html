@@ -11,12 +11,14 @@
 </head>
 <body>
   <div class="container-main">
+    
     <h1>CatClicker.</h1>
     <div class="cat-selector">
       <ul class="cat-list"></ul>
       <div class="cat-detail"></div>
     </div>
-    <button id="adminToggle">Admin Off</button>
+
+    <button id="adminToggle">Change Current Cat</button>
     <div class="cat-admin">
       <form id="adminForm" action="">
         <div>
@@ -30,6 +32,26 @@
         <button type="submit" id="submit">Submit</button>
       </form>
     </div>
+    <div>
+        <button id="newCatToggle">Add a New Cat</button>
+    </div>
+    <div class="cat-new">
+      <form id="newCatToggle" action="">
+        <div>
+          <label for="newName">Name:</label>
+          <input type="text" id="newName" placeholder="Mr. Puddlewhisker">
+        </div>
+        <div>
+          <!-- TODO: ADD ABILITY TO ADD A URL FOR IMAGE -->
+          <label for="newUrl">Add a Url</label>
+          <input type="text" id="newUrl" placeholder="">
+        </div> 
+        <button type="submit" id="newSubmit">Submit</button>
+      </form>
+    </div>
+    <!-- <div class="cat-delete">
+       <button type="submit" id="delete">Delete Current Cat</button>
+    </div> -->
   </div>
 
   <script
