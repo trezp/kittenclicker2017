@@ -1,3 +1,7 @@
+//CHANGE CAT IS BROKEN
+  //IMAGE AND DETAILS DO NOT SHOW UNTIL THE SIDEBAR IS CLICKED -- THE CAT DETAIL
+  //AREA IS NOT UPDATING 
+
 !(function(){
   function Kitten(name, imgUrl){
     this.name = name;
@@ -20,35 +24,31 @@
   const view = {
     init: function(kittenList){
       $('.cat-nav').append(this.renderSideBar(kittenList));
-      $('.cat-main-view').append(this.renderMain(kittenList[0]));   
-      
-      //kitten counter 
-      $('#app').on("click", ".cat-details img", function(){
-        const currentKitten = $(this).parent().attr('id');  
-        controller.incrementCounter(currentKitten);
-        view.updateView(kittenList, currentKitten);
-      });
+      $('.cat-main-view').append(this.renderMain(kittenList, kittenList[0].id));   
 
-      //sidebar
-      $('.container-main').on("click", ".cat-nav li", function(){
-        const currentKitten = $(this).attr('id');
-        view.updateView(kittenList, currentKitten);
+      //this should be this.updateView, and updateView called
+      $('#app').on('click', '.cat-details img', app.incrementCounter);
+      $('#app').on('click', '.cat-nav li', app.getClickedKitten);
+
+      $('.toggle-btn').on("click", function(){
+        $(this).toggleClass("active-button");
       });
 
       //toggle change cat form
       $('#update-toggle').on("click", function(){
-        $(this).toggleClass("active-button");
         $('.update').toggle();
       });
 
       //toggle new cat form
       $('#add-new-toggle').on("click", function(){
-        $(this).toggleClass("active-button");
         $('.add-new').toggle();
       });
 
       //handle change cat form ***REALLY NEEDS REFACTOR***
       $('#update-submit').on('click', function(event){
+
+        //this function should just the form values and pass to the controller,
+        //which will then prepare the data and pass to model
         event.preventDefault();
 
         const currentKitten = $('.cat-details').attr('id');
@@ -60,7 +60,7 @@
 
         if (catClicks === ''){
           $('#catClicks').parent().find('span').remove();
-          controller.updateKitten(currentKitten, catName, kittenObj[0].counter);
+          app.updateKitten(currentKitten, catName, kittenObj[0].counter);
           view.updateView(kittenList, currentKitten);
           $('#catName').val('');
           $('#catClicks').val('');
@@ -68,7 +68,7 @@
           $('#catClicks').parent().append('<span style="color:red">Please enter a number in the "clicks" field</span>');
         } else {
           $('#catClicks').parent().find('span').remove();
-          controller.updateKitten(currentKitten, catName, parseInt(catClicks));
+          app.updateKitten(currentKitten, catName, parseInt(catClicks));
           view.updateView(kittenList, currentKitten);
           $('#catName').val('');
           $('#catClicks').val('');
@@ -77,22 +77,26 @@
 
       $('#add-new-submit').on('click', function(event){
         event.preventDefault();
-        controller.createNewKitten($('#newName').val());
-        view.updateView(kittenList, null);
+        app.createNewKitten($('#newName').val());
+        view.updateView(kittenList);
       });
 
       $('#delete-submit').on('click', function(event){
 
       })
     },
-    renderMain: function(kitten){
-      return (
-        `<div class="cat-details" id="${kitten.id}">
-            <h2>${kitten.name}</h2>
-            <img src="images/${kitten.imgUrl}" alt="${kitten.alt}">
-            <h2>${kitten.name} clicked ${kitten.counter} times.</h2>
-        </div> `
-      )
+    renderMain: function(kittenList, currentKitten){
+      return kittenList.map(function(kitten){
+        if(kitten.id === currentKitten){
+          return (
+            `<div class="cat-details" id="${kitten.id}">
+                <h2>${kitten.name}</h2>
+                <img src="images/${kitten.imgUrl}" alt="${kitten.alt}">
+                <h2>${kitten.name} clicked ${kitten.counter} times.</h2>
+            </div> `
+          )
+        } 
+      });
     },
     renderSideBar: function(kittenList){
       return kittenList.map(function(kitten){
@@ -100,22 +104,23 @@
       });
     },
     updateView: function(kittenList, currentKitten){
-      $('.cat-nav').empty();
-      $('.cat-nav').append(view.renderSideBar(kittenList));
-      kittenList.forEach(function(kitten){
-        if (kitten.id === currentKitten){
-          $('.cat-main-view').empty();
-          $('.cat-main-view').append(view.renderMain(kitten)); 
-        }    
-      });
+      $('.cat-main-view').empty().append(view.renderMain(kittenList, currentKitten));
+      $('.cat-nav').empty().append(view.renderSideBar(kittenList));
     }
   }
-  const controller = {
+  const app = {
     init: function(){
       view.init(this.getAllKittens());
     },
     getAllKittens: function(){
       return model.kittens;
+    },
+    getCurrentKitten: function(){
+      return $('.cat-details').attr('id');
+    },
+    getClickedKitten: function(event){
+        const clickedKitten = $(event.target).attr('id');
+        view.updateView(model.kittens, clickedKitten);
     },
     createNewKitten: function(name, imgUrl){
       model.kittens.push(new Kitten(name, imgUrl));
@@ -131,18 +136,20 @@
           newKitten += kitten.id;
         }
       });
-      view.updateView(this.getAllKittens(), newKitten);
+      console.log(newKitten)
+      view.updateView(model.kittens, newKitten);
     },
     deleteKitten(){
       //TODO
     },
-    incrementCounter: function(kittenId){
+    incrementCounter: function(){
       model.kittens.forEach(function(kitten){
-        if(kittenId === kitten.id){
-          kitten.counter = kitten.counter + 1;
+        if(app.getCurrentKitten() === kitten.id){
+          kitten.counter++;
         }
       });
+      view.updateView(model.kittens, app.getCurrentKitten());
     }
   }
-  controller.init();
+  app.init();
 })();
