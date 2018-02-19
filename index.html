@@ -19,37 +19,33 @@
       <div class="cat-main-view"></div>
     </div>
 
-    <button id="update-toggle" class="toggle-btn">Change Current Cat</button>
-    <div class="update">
+    <button class="toggle-btn toggle-update-form">Change Current Cat</button>
+    <div class="update-form form">
       <form>
-        <div>
-          <label for="catName">Name:</label>
+        <label for="catName">Name
           <input type="text" id="catName" placeholder="Mr. Puddlewhisker">
-        </div>
-        <div>
-          <label for="catClicks">Change # of Clicks</label>
+        </label>
+        <label for="catClicks">Clicks
           <input type="text" id="catClicks" placeholder="3488888">
-        </div> 
-        <button type="submit" id="update-submit">Submit</button>
+        </label>
+        <button type="submit" id="update">Update</button>
       </form>
     </div>
 
-    <button id="add-new-toggle" class="toggle-btn">Add a New Cat</button>
-    <div class="add-new">
+    <button class="toggle-btn toggle-add-form">Add a New Cat</button>
+    <div class="add-form form">
       <form>
-        <div>
-          <label for="newName">Name:</label>
+        <label for="newName">Name
           <input type="text" id="newName" placeholder="Mr. Puddlewhisker">
-        </div>
-        <div>
-          <label for="newUrl">Change # of Clicks</label>
-          <input type="text" id="newUrl" placeholder="">
-        </div> 
-        <button type="submit" id="add-new-submit">Submit</button>
+        </label>
+        <label for="newUrl">Clicks
+          <input type="text" id="newUrl" placeholder="54">
+        </label>
+        <button type="submit" id="add-new">Add</button>
       </form>
     </div>
     
-    <button id="delete-submit">Delete Current Cat</button>
+    <button id="delete">Delete Current Cat</button>
   </div>
 
   <script

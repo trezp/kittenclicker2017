@@ -27,6 +27,11 @@ button {
     display: block;
 }
 
+label {
+    display: block;
+    font-weight: bold;
+}
+
 .active-button {
     background: green;
 }
@@ -64,7 +69,7 @@ button {
 }
 
  /* ADMIN */
-.update, .add-new {
+.update-form, .add-form {
     display: none;
 }
 .cat-change div {

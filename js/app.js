@@ -1,7 +1,3 @@
-//CHANGE CAT IS BROKEN
-  //IMAGE AND DETAILS DO NOT SHOW UNTIL THE SIDEBAR IS CLICKED -- THE CAT DETAIL
-  //AREA IS NOT UPDATING 
-
 !(function(){
   function Kitten(name, imgUrl){
     this.name = name;
@@ -23,67 +19,32 @@
 
   const view = {
     init: function(kittenList){
+      
       $('.cat-nav').append(this.renderSideBar(kittenList));
       $('.cat-main-view').append(this.renderMain(kittenList, kittenList[0].id));   
 
-      //this should be this.updateView, and updateView called
       $('#app').on('click', '.cat-details img', app.incrementCounter);
       $('#app').on('click', '.cat-nav li', app.getClickedKitten);
 
-      $('.toggle-btn').on("click", function(){
-        $(this).toggleClass("active-button");
-      });
-
-      //toggle change cat form
-      $('#update-toggle').on("click", function(){
-        $('.update').toggle();
-      });
-
-      //toggle new cat form
-      $('#add-new-toggle').on("click", function(){
-        $('.add-new').toggle();
-      });
-
-      //handle change cat form ***REALLY NEEDS REFACTOR***
-      $('#update-submit').on('click', function(event){
-
-        //this function should just the form values and pass to the controller,
-        //which will then prepare the data and pass to model
-        event.preventDefault();
-
-        const currentKitten = $('.cat-details').attr('id');
-        const catName = $('#catName').val() || currentKitten;
-        const catClicks = $('#catClicks').val();
-        const kittenObj = kittenList.filter(function(kitten){
-          return kitten.id === currentKitten;
-        });
-
-        if (catClicks === ''){
-          $('#catClicks').parent().find('span').remove();
-          app.updateKitten(currentKitten, catName, kittenObj[0].counter);
-          view.updateView(kittenList, currentKitten);
-          $('#catName').val('');
-          $('#catClicks').val('');
-        } else if (catClicks.length > 0 && isNaN(parseInt(catClicks))){
-          $('#catClicks').parent().append('<span style="color:red">Please enter a number in the "clicks" field</span>');
-        } else {
-          $('#catClicks').parent().find('span').remove();
-          app.updateKitten(currentKitten, catName, parseInt(catClicks));
-          view.updateView(kittenList, currentKitten);
-          $('#catName').val('');
-          $('#catClicks').val('');
+      //toggle forms open and shut
+      $('.toggle-btn').on("click", function(event){
+        if($(event.target).hasClass('toggle-update-form')){
+          $('.update-form').toggle(); 
+        } else if($(event.target).hasClass('toggle-add-form')){
+          $('.add-form').toggle();
         }
       });
-
-      $('#add-new-submit').on('click', function(event){
-        event.preventDefault();
-        app.createNewKitten($('#newName').val());
-        view.updateView(kittenList);
+      // update current kitten
+      $('#update').on('click', function(event){
+        app.updateKitten(event);
       });
 
-      $('#delete-submit').on('click', function(event){
+      // add a new kitten 
+      $('#add-new').on('click', function(event){
+        app.createNewKitten(event);
+      });
 
-      })
+      $('#delete').on('click', app.deleteKitten);
     },
     renderMain: function(kittenList, currentKitten){
       return kittenList.map(function(kitten){
@@ -115,18 +76,26 @@
     getAllKittens: function(){
       return model.kittens;
     },
-    getCurrentKitten: function(){
+    getKittenId: function(){
       return $('.cat-details').attr('id');
     },
     getClickedKitten: function(event){
         const clickedKitten = $(event.target).attr('id');
         view.updateView(model.kittens, clickedKitten);
     },
-    createNewKitten: function(name, imgUrl){
+    createNewKitten: function(event, imgUrl){
+      event.preventDefault();
+      let name = $('#newName').val();
       model.kittens.push(new Kitten(name, imgUrl));
+      view.updateView(model.kittens, app.getKittenId());
     },
-    updateKitten: function(kittenId, name, clicks){
+    updateKitten: function(event){
+      event.preventDefault();
       let newKitten = '';
+      let kittenId = app.getKittenId();
+      let name = $('#catName').val();
+      let clicks =  $('#catClicks').val();
+
       model.kittens.forEach(function(kitten){
         if(kittenId === kitten.id){
           kitten.id = name.toLowerCase();
@@ -136,19 +105,25 @@
           newKitten += kitten.id;
         }
       });
-      console.log(newKitten)
       view.updateView(model.kittens, newKitten);
     },
     deleteKitten(){
-      //TODO
+      let kittenId = app.getKittenId();
+      model.kittens.forEach(function(kitten, index){
+       
+        if(kittenId === kitten.id){
+          model.kittens.splice(index, 1)
+        }
+      })
+      view.updateView(model.kittens, kittenId);
     },
     incrementCounter: function(){
       model.kittens.forEach(function(kitten){
-        if(app.getCurrentKitten() === kitten.id){
+        if(app.getKittenId() === kitten.id){
           kitten.counter++;
         }
       });
-      view.updateView(model.kittens, app.getCurrentKitten());
+      view.updateView(model.kittens, app.getKittenId());
     }
   }
   app.init();
