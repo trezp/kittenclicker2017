@@ -1,77 +1,84 @@
 body {
-    font-family: 'Amatic SC', cursive;
-    font-size: 18px;
+  font-family: 'Amatic SC', cursive;
+  font-size: 18px;
+  background: #f4f4f4;
+  color: #373737;
 }
 
 /* GENERIC STYLES */
+
+h1 {
+  font-size: 3em;
+  color: #C0b283;
+}
 h1, h2 {
-    text-align: center;
+  text-align: center;
 }
 h2 {
-    font-size: 2.5em;
+  font-size: 2.5em;
 }
 ul {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
-img {
-    max-width: 250px;
-    margin: 0 auto;
-    border-radius: 5px; 
-    border: 2px solid black;
-    cursor: pointer;
-}
+
 button {
-    margin: 5px;
-    margin-left: 0;
-    display: block;
+  border: 1px solid black;
+  padding: 5px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  margin-top: 10px;
+  background: none;
 }
 
 label {
-    display: block;
-    font-weight: bold;
+  display: block;
 }
-
-.active-button {
-    background: green;
-}
-
-/* MAIN CONTAINERS  */
-.container-main {
-    max-width: 80%;
-    margin: auto;
+img {
+  align-self: center;
+  max-height: 300px;
+  max-width: 100%;
+  border: .2em solid #C0b283;
+  border-radius: 3px;
 }
 
 .clicker-app {
-    display: flex;
+  display: grid; 
+  margin: auto;
+  padding: 3rem;
+  padding-top: 0;
+  grid-template-columns: 1fr 3fr;
+  background: #dcd0c0;
 }
-
-/* MAIN VIEW  */
-.cat-main-view {
-    margin: auto;
-}
-.cat-main-view h2 {
-    margin: 0;
-}
-
-/* SIDEBAR */
 
 .cat-nav {
-    list-style-type: none;
-    cursor: pointer;
-}
-.cat-nav li {
-    font-size: 2.5em;
-}
-.cat-nav li:hover {
-    color: purple;
-    font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  font-size: 2.5em;
+  background: #f4f4f4;
 }
 
- /* ADMIN */
-.update-form, .add-form {
-    display: none;
+.cat-nav li {
+  text-align: center;
+  cursor: pointer;
 }
-.cat-change div {
-    padding-bottom: .5em;
+
+.cat-nav li:hover::before,
+.cat-nav li:hover::after {
+  font-family: 'Material Icons';
+  content: '\E91D';
+  color: #C0b283;
+  font-size: .5em;
+}
+
+.cat-main-view {
+  display: flex;
+  justify-content: center;
+}
+
+.admin-area {
+  display: grid; 
+  padding: 2em;
+  grid-template-columns: 1fr 1fr 1fr;
 }
