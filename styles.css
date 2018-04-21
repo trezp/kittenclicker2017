@@ -10,6 +10,7 @@ body {
 h1 {
   font-size: 3em;
   color: #C0b283;
+  margin: .25em;
 }
 h1, h2 {
   text-align: center;
@@ -21,7 +22,6 @@ ul {
   list-style-type: none;
   padding: 0;
 }
-
 button {
   border: 1px solid black;
   padding: 5px;
@@ -30,7 +30,6 @@ button {
   margin-top: 10px;
   background: none;
 }
-
 label {
   display: block;
 }
@@ -42,12 +41,15 @@ img {
   border-radius: 3px;
 }
 
+.container-main {
+  display: grid;
+  height: 100vh;
+}
+
 .clicker-app {
   display: grid; 
-  margin: auto;
-  padding: 3rem;
-  padding-top: 0;
   grid-template-columns: 1fr 3fr;
+  padding: 2em;
   background: #dcd0c0;
 }
 
