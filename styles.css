@@ -2,14 +2,14 @@ body {
   font-family: 'Amatic SC', cursive;
   font-size: 18px;
   background: #f4f4f4;
-  color: #373737;
+  color: #d5d5d5;
 }
 
 /* GENERIC STYLES */
 
 h1 {
   font-size: 3em;
-  color: #C0b283;
+  color: #6D7993;
   margin: .25em;
 }
 h1, h2 {
@@ -23,7 +23,7 @@ ul {
   padding: 0;
 }
 button {
-  border: 1px solid black;
+  border: 1px solid #6D7993;
   padding: 5px;
   border-radius: 4px;
   margin-bottom: 15px;
@@ -37,7 +37,7 @@ img {
   align-self: center;
   max-height: 300px;
   max-width: 100%;
-  border: .2em solid #C0b283;
+  border: .2em solid #9099A2;
   border-radius: 3px;
 }
 
@@ -50,7 +50,7 @@ img {
   display: grid; 
   grid-template-columns: 1fr 3fr;
   padding: 2em;
-  background: #dcd0c0;
+  background: #6D7993;
 }
 
 .cat-nav {
@@ -58,19 +58,20 @@ img {
   flex-direction: column;
   justify-content: space-around;
   font-size: 2.5em;
-  background: #f4f4f4;
+  background: #d5d5d5;
 }
 
 .cat-nav li {
   text-align: center;
   cursor: pointer;
+  color: #6D7993;
 }
 
 .cat-nav li:hover::before,
 .cat-nav li:hover::after {
   font-family: 'Material Icons';
   content: '\E91D';
-  color: #C0b283;
+  color: #96858F;
   font-size: .5em;
 }
 
